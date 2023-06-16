@@ -31,14 +31,19 @@ class Block(pygame.sprite.Sprite):
                 mouse_x = mouse_pos[0]
                 mouse_y = mouse_pos[1]
 
+                top_left_x = self.rect.x
+                top_left_y = self.rect.y
+                bot_right_x = self.rect.x + self.WIDTH * BLOCK_SIZE
+                bot_right_y = self.rect.y + self.HEIGHT * BLOCK_SIZE
+
                 # Aktualizuj pozycję bloku z uwzględnieniem ograniczeń ruchu
-                if self.rect.y>mouse_y>BOARD_Y:
+                if top_left_y>mouse_y>BOARD_Y:
                     self.rect.y -= BLOCK_SIZE
-                elif self.rect.y+BLOCK_SIZE<mouse_y<BOARD_Y+BOARD_SIZE_Y:
+                elif bot_right_y<mouse_y<BOARD_Y+BOARD_SIZE_Y:
                     self.rect.y += BLOCK_SIZE
-                elif self.rect.x>mouse_x>BOARD_X:
+                elif top_left_x>mouse_x>BOARD_X:
                     self.rect.x -= BLOCK_SIZE
-                elif self.rect.x+BLOCK_SIZE<mouse_x<BOARD_X+BOARD_SIZE_X:
+                elif bot_right_x<mouse_x<BOARD_X+BOARD_SIZE_X:
                     self.rect.x += BLOCK_SIZE
             else:
                 self.selected = False  # Zakończ przesuwanie bloku
