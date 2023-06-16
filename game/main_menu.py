@@ -15,49 +15,74 @@ BG_COLOR = (255, 255, 255)
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Klotski Game")
 
+# Funkcje układające bloki w zależności od poziomu gry
+def setup_easy():
+    raise NotImplemented
+
+def setup_medium():
+    block_2x1_1 = Block2x1(0, 0)
+    block_2x1_2 = Block2x1(3, 0)
+    block_2x1_3 = Block2x1(0, 3)
+    block_2x1_4 = Block2x1(3, 3)
+    block_1x1_1 = Block1x1(0, 2)
+    block_1x1_2 = Block1x1(3, 2)
+    block_1x1_3 = Block1x1(1, 3)
+    block_1x1_4 = Block1x1(2, 3)
+    block_1x1_5 = Block1x1(1, 4)
+    block_1x1_6 = Block1x1(2, 4)
+    block_2x2_1 = Block2x2(1, 0)
+
+    return [block_2x1_1, block_2x1_2, block_2x1_3, block_2x1_4, block_1x1_1, block_1x1_2, block_1x1_3, block_1x1_4, block_1x1_5, block_1x1_6, block_2x2_1]
+
+def setup_hard():
+    raise NotImplemented
+
 # Funkcja do rozpoczęcia nowej gry
 def start_game(difficulty):
     # Tutaj możesz dodać kod do rozpoczęcia gry z wybranym poziomem trudności
     print("Rozpoczęto nową grę - poziom trudności:", difficulty)
-    if difficulty == "Medium":
-        board = Board()
 
-        board_group = pygame.sprite.GroupSingle()
-        board_group.add(board)
+    blocks_setup = None
 
-        # Tworzenie instancji klocków dla poziomu "Medium"
-        block_2x1_1 = Block2x1(0, 0)
-        block_2x1_2 = Block2x1(3, 0)
-        block_2x1_3 = Block2x1(0, 3)
-        block_2x1_4 = Block2x1(3, 3)
-        block_1x1_1 = Block1x1(0, 2)
-        block_1x1_2 = Block1x1(3, 2)
-        block_1x1_3 = Block1x1(1, 3)
-        block_1x1_4 = Block1x1(2, 3)
-        block_1x1_5 = Block1x1(1, 4)
-        block_1x1_6 = Block1x1(2, 4)
-        block_2x2_1 = Block2x2(1, 0)
+    if difficulty == "Easy":
+        blocks_setup=setup_easy()
+    elif difficulty == "Medium":
+        blocks_setup=setup_medium()
+    else:
+        blocks_setup = setup_hard()
 
-        # Grupa sprite'ów, w której przechowujemy klocki
-        blocks_group = pygame.sprite.Group()
-        blocks_group.add(block_2x1_1, block_2x1_2, block_2x1_3, block_2x1_4, block_1x1_1, block_1x1_2, block_1x1_3, block_1x1_4, block_1x1_5, block_1x1_6, block_2x2_1)
+    board = Board()
 
-        # Główna pętla gry
-        running = True
-        while running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
+    board_group = pygame.sprite.GroupSingle()
+    board_group.add(board)
 
-            # Logika gry 
-            # ...
+    # Grupa sprite'ów, w której przechowujemy klocki
+    blocks_group = pygame.sprite.Group()
+    for block in blocks_setup:
+        blocks_group.add(block)
 
-            # Rysowanie sprite'ów na planszy
+    # Główna pętla gry
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
 
-            board_group.draw(screen)
-            blocks_group.draw(screen)
+        mouse_pos = pygame.mouse.get_pos()
 
-            pygame.display.flip()
+        # Logika gry
+        # ...
+
+        # Rysowanie sprite'ów na planszy
+
+        screen.fill((100, 100, 100))
+        board_group.draw(screen)
+        blocks_group.draw(screen)
+        blocks_group.update(mouse_pos)
+
+        pygame.display.flip()
+
+
 
 # Funkcja do wyświetlania zasad gry
 def show_rules():
@@ -103,7 +128,7 @@ def create_main_menu():
                 elif quit_rect.collidepoint(mouse_pos):
                     quit_game()
 
-        screen.fill(BG_COLOR)
+        screen.fill((100, 100, 100))
         screen.blit(title_text, title_rect)
         screen.blit(easy_text, easy_rect)
         screen.blit(medium_text, medium_rect)
