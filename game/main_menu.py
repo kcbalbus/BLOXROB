@@ -65,6 +65,9 @@ def setup_hard():
     return [block_2x1_1, block_2x1_2, block_2x1_3, block_2x1_4, block_1x1_1, block_1x1_2, block_1x1_3, block_1x1_4,
             block_1x2_1, block_2x2_1]
 
+
+
+
 # Funkcja do rozpoczęcia nowej gry
 def start_game(difficulty):
     # Tutaj możesz dodać kod do rozpoczęcia gry z wybranym poziomem trudności
@@ -90,8 +93,6 @@ def start_game(difficulty):
         blocks_group.add(block)
 
 
-    block_move_slot_available = False
-
     # Główna pętla gry
     running = True
     while running:
@@ -104,15 +105,11 @@ def start_game(difficulty):
         screen.fill((100, 100, 100))
         board_group.draw(screen)
         blocks_group.draw(screen)
+        blocks_group.update(mouse_pos, blocks_group)
 
-        mouse_pressed = pygame.mouse.get_pressed()
-
-        if mouse_pressed[0] and not block_move_slot_available:
-            blocks_group.update(mouse_pos, blocks_group, True)
-        else:
-            blocks_group.update(mouse_pos, blocks_group, False)
-
-        block_move_slot_available = mouse_pressed[0]
+        if blocks_group.sprites()[-1].check_win_condition():
+            print("Poziom ukończony")
+            running = False
 
         pygame.display.flip()
         clock.tick(60)

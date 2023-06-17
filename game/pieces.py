@@ -24,7 +24,7 @@ class Block(pygame.sprite.Sprite):
     def prepare_rect(self):
         return self.image.get_rect(topleft = (BOARD_X+BLOCK_SIZE*self.x, BOARD_Y+BLOCK_SIZE*self.y))
 
-    def update(self, mouse_pos, blocks_group, move_slot):
+    def update(self, mouse_pos, blocks_group):
         if self.selected:
             if pygame.mouse.get_pressed()[0]:  # Sprawdzenie, czy lewy przycisk myszy jest wciśnięty
 
@@ -35,7 +35,7 @@ class Block(pygame.sprite.Sprite):
             else:
                 self.selected = False  # Zakończ przesuwanie bloku
         else:
-            if self.rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0] and move_slot:
+            if self.rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0] and self.check_move_slot(blocks_group):
                 self.selected = True
 
     def move_block(self, mouse_x, mouse_y):
@@ -72,6 +72,14 @@ class Block(pygame.sprite.Sprite):
 
     def move_block_right(self):
         self.rect.x += BLOCK_SIZE
+
+
+    def check_move_slot(self, blocks_group):
+        for block in blocks_group:
+            if block.selected:
+                return False
+
+        return True
 
     def check_collisions(self, blocks_group, move):
         if move is not None:
@@ -122,3 +130,10 @@ class Block2x2(Block):
         super().__init__(x, y)
         self.image = pygame.image.load('graphics/block2x2.png')
         self.rect = self.prepare_rect()
+
+    def check_win_condition(self):
+        # Sprawdź, czy klocek 2x2 znajduje się na środku dolnego rzędu planszy
+        if self.rect.x == BOARD_X + 1 * BLOCK_SIZE and self.rect.y == BOARD_Y + 3 * BLOCK_SIZE:
+            return True
+        else:
+            return False
