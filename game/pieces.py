@@ -24,34 +24,68 @@ class Block(pygame.sprite.Sprite):
     def prepare_rect(self):
         return self.image.get_rect(topleft = (BOARD_X+BLOCK_SIZE*self.x, BOARD_Y+BLOCK_SIZE*self.y))
 
-    def update(self, mouse_pos):
+    def update(self, mouse_pos, blocks_group, move_slot):
         if self.selected:
             if pygame.mouse.get_pressed()[0]:  # Sprawdzenie, czy lewy przycisk myszy jest wciśnięty
-                # Oblicz przesunięcie kursora
-                mouse_x = mouse_pos[0]
-                mouse_y = mouse_pos[1]
 
-                top_left_x = self.rect.x
-                top_left_y = self.rect.y
-                bot_right_x = self.rect.x + self.WIDTH * BLOCK_SIZE
-                bot_right_y = self.rect.y + self.HEIGHT * BLOCK_SIZE
+                move = self.move_block(mouse_pos[0], mouse_pos[1])
 
-                # Aktualizuj pozycję bloku z uwzględnieniem ograniczeń ruchu
-                if top_left_y>mouse_y>BOARD_Y:
-                    self.rect.y -= BLOCK_SIZE
-                elif bot_right_y<mouse_y<BOARD_Y+BOARD_SIZE_Y:
-                    self.rect.y += BLOCK_SIZE
-                elif top_left_x>mouse_x>BOARD_X:
-                    self.rect.x -= BLOCK_SIZE
-                elif bot_right_x<mouse_x<BOARD_X+BOARD_SIZE_X:
-                    self.rect.x += BLOCK_SIZE
+                self.check_collisions(blocks_group, move)
+
             else:
                 self.selected = False  # Zakończ przesuwanie bloku
         else:
-            if self.rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0]:
+            if self.rect.collidepoint(mouse_pos) and pygame.mouse.get_pressed()[0] and move_slot:
                 self.selected = True
-                self.click_pos = mouse_pos
-                self.original_rect = self.rect.copy()
+
+    def move_block(self, mouse_x, mouse_y):
+        top_left_x = self.rect.x
+        top_left_y = self.rect.y
+        bot_right_x = self.rect.x + self.WIDTH * BLOCK_SIZE
+        bot_right_y = self.rect.y + self.HEIGHT * BLOCK_SIZE
+
+        move = None
+
+        # Aktualizuj pozycję bloku z uwzględnieniem ograniczeń ruchu
+        if top_left_y > mouse_y > BOARD_Y:
+            move = "up"
+            self.move_block_up()
+        elif bot_right_y < mouse_y < BOARD_Y + BOARD_SIZE_Y:
+            move = "down"
+            self.move_block_down()
+        elif top_left_x > mouse_x > BOARD_X:
+            move = "left"
+            self.move_block_left()
+        elif bot_right_x < mouse_x < BOARD_X + BOARD_SIZE_X:
+            move = "right"
+            self.move_block_right()
+
+        return move
+
+    def move_block_up(self):
+        self.rect.y -= BLOCK_SIZE
+    def move_block_down(self):
+        self.rect.y += BLOCK_SIZE
+
+    def move_block_left(self):
+        self.rect.x -= BLOCK_SIZE
+
+    def move_block_right(self):
+        self.rect.x += BLOCK_SIZE
+
+    def check_collisions(self, blocks_group, move):
+        if move is not None:
+            colliding_blocks = pygame.sprite.spritecollide(self, blocks_group, False)
+            if len(colliding_blocks) > 1:
+                if move == "up":
+                    self.move_block_down()
+                elif move == "down":
+                    self.move_block_up()
+                elif move == "left":
+                    self.move_block_right()
+                elif move == "right":
+                    self.move_block_left()
+
 
 
 class Block1x1(Block):

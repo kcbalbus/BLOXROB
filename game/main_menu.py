@@ -14,6 +14,7 @@ BG_COLOR = (255, 255, 255)
 # Utworzenie okna
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Klotski Game")
+clock = pygame.time.Clock()
 
 # Funkcje układające bloki w zależności od poziomu gry
 def setup_easy():
@@ -32,7 +33,8 @@ def setup_medium():
     block_1x1_6 = Block1x1(2, 4)
     block_2x2_1 = Block2x2(1, 0)
 
-    return [block_2x1_1, block_2x1_2, block_2x1_3, block_2x1_4, block_1x1_1, block_1x1_2, block_1x1_3, block_1x1_4, block_1x1_5, block_1x1_6, block_2x2_1]
+    return [block_2x1_1, block_2x1_2, block_2x1_3, block_2x1_4, block_1x1_1, block_1x1_2, block_1x1_3, block_1x1_4,
+            block_1x1_5, block_1x1_6, block_2x2_1]
 
 def setup_hard():
     raise NotImplemented
@@ -61,6 +63,9 @@ def start_game(difficulty):
     for block in blocks_setup:
         blocks_group.add(block)
 
+
+    block_move_slot_available = False
+
     # Główna pętla gry
     running = True
     while running:
@@ -70,18 +75,21 @@ def start_game(difficulty):
 
         mouse_pos = pygame.mouse.get_pos()
 
-        # Logika gry
-        # ...
-
-        # Rysowanie sprite'ów na planszy
-
         screen.fill((100, 100, 100))
         board_group.draw(screen)
         blocks_group.draw(screen)
-        blocks_group.update(mouse_pos)
+
+        mouse_pressed = pygame.mouse.get_pressed()
+
+        if mouse_pressed[0] and not block_move_slot_available:
+            blocks_group.update(mouse_pos, blocks_group, True)
+        else:
+            blocks_group.update(mouse_pos, blocks_group, False)
+
+        block_move_slot_available = mouse_pressed[0]
 
         pygame.display.flip()
-
+        clock.tick(60)
 
 
 # Funkcja do wyświetlania zasad gry
@@ -137,6 +145,7 @@ def create_main_menu():
         screen.blit(quit_text, quit_rect)
 
         pygame.display.flip()
+        clock.tick(60)
 
 # Uruchomienie gry
 create_main_menu()
