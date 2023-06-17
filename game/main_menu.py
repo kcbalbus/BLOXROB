@@ -18,7 +18,21 @@ clock = pygame.time.Clock()
 
 # Funkcje układające bloki w zależności od poziomu gry
 def setup_easy():
-    raise NotImplemented
+    block_2x1_1 = Block2x1(0, 3)
+    block_2x1_2 = Block2x1(3, 3)
+    block_1x2_1 = Block1x2(1, 2)
+    block_1x1_1 = Block1x1(0, 0)
+    block_1x1_2 = Block1x1(0, 1)
+    block_1x1_3 = Block1x1(3, 0)
+    block_1x1_4 = Block1x1(3, 1)
+    block_1x1_5 = Block1x1(1, 3)
+    block_1x1_6 = Block1x1(2, 3)
+    block_1x1_7 = Block1x1(1, 4)
+    block_1x1_8 = Block1x1(2, 4)
+    block_2x2_1 = Block2x2(1, 0)
+
+    return [block_2x1_1, block_2x1_2, block_1x2_1, block_1x1_1, block_1x1_2, block_1x1_3, block_1x1_4,
+            block_1x1_5, block_1x1_6, block_1x1_7, block_1x1_8, block_2x2_1]
 
 def setup_medium():
     block_2x1_1 = Block2x1(0, 0)
@@ -37,7 +51,19 @@ def setup_medium():
             block_1x1_5, block_1x1_6, block_2x2_1]
 
 def setup_hard():
-    raise NotImplemented
+    block_2x1_1 = Block2x1(0, 0)
+    block_2x1_2 = Block2x1(3, 0)
+    block_2x1_3 = Block2x1(0, 3)
+    block_2x1_4 = Block2x1(3, 3)
+    block_1x2_1 = Block1x2(1, 2)
+    block_1x1_1 = Block1x1(1, 3)
+    block_1x1_2 = Block1x1(2, 3)
+    block_1x1_3 = Block1x1(1, 4)
+    block_1x1_4 = Block1x1(2, 4)
+    block_2x2_1 = Block2x2(1, 0)
+
+    return [block_2x1_1, block_2x1_2, block_2x1_3, block_2x1_4, block_1x1_1, block_1x1_2, block_1x1_3, block_1x1_4,
+            block_1x2_1, block_2x2_1]
 
 # Funkcja do rozpoczęcia nowej gry
 def start_game(difficulty):
@@ -147,5 +173,6 @@ def create_main_menu():
         pygame.display.flip()
         clock.tick(60)
 
-# Uruchomienie gry
-create_main_menu()
+if __name__ == "__main__":
+    # Uruchomienie gry
+    create_main_menu()
