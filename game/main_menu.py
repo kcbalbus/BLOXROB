@@ -2,6 +2,7 @@ import pygame
 import sys
 from pieces import *
 from board import *
+import game_data
 
 pygame.init()
 
@@ -16,55 +17,11 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Klotski Game")
 clock = pygame.time.Clock()
 
-# Funkcje układające bloki w zależności od poziomu gry
-def setup_easy():
-    block_2x1_1 = Block2x1(0, 3)
-    block_2x1_2 = Block2x1(3, 3)
-    block_1x2_1 = Block1x2(1, 2)
-    block_1x1_1 = Block1x1(0, 0)
-    block_1x1_2 = Block1x1(0, 1)
-    block_1x1_3 = Block1x1(3, 0)
-    block_1x1_4 = Block1x1(3, 1)
-    block_1x1_5 = Block1x1(1, 3)
-    block_1x1_6 = Block1x1(2, 3)
-    block_1x1_7 = Block1x1(1, 4)
-    block_1x1_8 = Block1x1(2, 4)
-    block_2x2_1 = Block2x2(1, 0)
+def lvl_setup(difficulty):
+    return game_data.load_lvl(difficulty)
 
-    return [block_2x1_1, block_2x1_2, block_1x2_1, block_1x1_1, block_1x1_2, block_1x1_3, block_1x1_4,
-            block_1x1_5, block_1x1_6, block_1x1_7, block_1x1_8, block_2x2_1]
-
-def setup_medium():
-    block_2x1_1 = Block2x1(0, 0)
-    block_2x1_2 = Block2x1(3, 0)
-    block_2x1_3 = Block2x1(0, 3)
-    block_2x1_4 = Block2x1(3, 3)
-    block_1x1_1 = Block1x1(0, 2)
-    block_1x1_2 = Block1x1(3, 2)
-    block_1x1_3 = Block1x1(1, 3)
-    block_1x1_4 = Block1x1(2, 3)
-    block_1x1_5 = Block1x1(1, 4)
-    block_1x1_6 = Block1x1(2, 4)
-    block_2x2_1 = Block2x2(1, 0)
-
-    return [block_2x1_1, block_2x1_2, block_2x1_3, block_2x1_4, block_1x1_1, block_1x1_2, block_1x1_3, block_1x1_4,
-            block_1x1_5, block_1x1_6, block_2x2_1]
-
-def setup_hard():
-    block_2x1_1 = Block2x1(0, 0)
-    block_2x1_2 = Block2x1(3, 0)
-    block_2x1_3 = Block2x1(0, 3)
-    block_2x1_4 = Block2x1(3, 3)
-    block_1x2_1 = Block1x2(1, 2)
-    block_1x1_1 = Block1x1(1, 3)
-    block_1x1_2 = Block1x1(2, 3)
-    block_1x1_3 = Block1x1(1, 4)
-    block_1x1_4 = Block1x1(2, 4)
-    block_2x2_1 = Block2x2(1, 0)
-
-    return [block_2x1_1, block_2x1_2, block_2x1_3, block_2x1_4, block_1x1_1, block_1x1_2, block_1x1_3, block_1x1_4,
-            block_1x2_1, block_2x2_1]
-
+def lvl_restart(difficulty):
+    return game_data.restart_lvl(difficulty)
 
 
 
@@ -73,14 +30,8 @@ def start_game(difficulty):
     # Tutaj możesz dodać kod do rozpoczęcia gry z wybranym poziomem trudności
     print("Rozpoczęto nową grę - poziom trudności:", difficulty)
 
-    blocks_setup = None
+    blocks_setup, moves = lvl_setup(difficulty)
 
-    if difficulty == "Easy":
-        blocks_setup=setup_easy()
-    elif difficulty == "Medium":
-        blocks_setup=setup_medium()
-    else:
-        blocks_setup = setup_hard()
 
     board = Board()
 
@@ -106,6 +57,7 @@ def start_game(difficulty):
         board_group.draw(screen)
         blocks_group.draw(screen)
         blocks_group.update(mouse_pos, blocks_group)
+
 
         if blocks_group.sprites()[-1].check_win_condition():
             print("Poziom ukończony")
@@ -141,6 +93,8 @@ def create_main_menu():
     hard_rect = hard_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 100))
     rules_rect = rules_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 150))
     quit_rect = quit_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 200))
+
+    game_data.load_data()
 
     while True:
         for event in pygame.event.get():

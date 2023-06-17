@@ -12,8 +12,6 @@ class Block(pygame.sprite.Sprite):
 
     def __init__(self, x, y):
         super().__init__()
-        self.x=x
-        self.y=y
         self.image = None
         self.rect = None
         self.selected = False
@@ -21,8 +19,8 @@ class Block(pygame.sprite.Sprite):
         self.offset_y = 0
 
 
-    def prepare_rect(self):
-        return self.image.get_rect(topleft = (BOARD_X+BLOCK_SIZE*self.x, BOARD_Y+BLOCK_SIZE*self.y))
+    def prepare_rect(self, x, y):
+        return self.image.get_rect(topleft = (BOARD_X+BLOCK_SIZE*x, BOARD_Y+BLOCK_SIZE*y))
 
     def update(self, mouse_pos, blocks_group):
         if self.selected:
@@ -95,6 +93,12 @@ class Block(pygame.sprite.Sprite):
                     self.move_block_left()
 
 
+    def getX(self):
+        return (self.rect.x-BOARD_X)/BLOCK_SIZE
+
+    def getY(self):
+        return (self.rect.y-BOARD_Y)/BLOCK_SIZE
+
 
 class Block1x1(Block):
     WIDTH=1
@@ -102,7 +106,7 @@ class Block1x1(Block):
     def __init__(self, x, y):
         super().__init__(x, y)
         self.image= pygame.image.load('graphics/block1x1.png').convert_alpha()
-        self.rect = self.prepare_rect()
+        self.rect = self.prepare_rect(x, y)
 
 
 class Block2x1(Block):
@@ -111,7 +115,7 @@ class Block2x1(Block):
     def __init__(self, x, y):
         super().__init__(x, y)
         self.image = pygame.image.load('graphics/block2x1.png')
-        self.rect = self.prepare_rect()
+        self.rect = self.prepare_rect(x, y)
 
 
 class Block1x2(Block):
@@ -120,7 +124,7 @@ class Block1x2(Block):
     def __init__(self, x, y):
         super().__init__(x, y)
         self.image = pygame.image.load('graphics/block1x2.png')
-        self.rect = self.prepare_rect()
+        self.rect = self.prepare_rect(x, y)
 
 
 class Block2x2(Block):
@@ -129,7 +133,7 @@ class Block2x2(Block):
     def __init__(self, x, y):
         super().__init__(x, y)
         self.image = pygame.image.load('graphics/block2x2.png')
-        self.rect = self.prepare_rect()
+        self.rect = self.prepare_rect(x, y)
 
     def check_win_condition(self):
         # Sprawdź, czy klocek 2x2 znajduje się na środku dolnego rzędu planszy
