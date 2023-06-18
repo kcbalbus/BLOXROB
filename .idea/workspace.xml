@@ -6,10 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="fc693fdd-58de-43f6-a972-2df9f3cd9b4d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/game_data.json" beforeDir="false" afterPath="$PROJECT_DIR$/game/game_data.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/game_data.json" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/game/game_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/game_data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/main_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/main_menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/pieces.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/pieces.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,17 +29,21 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2RIEgUBWzOh4raYnr6hQj37dQD7" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/kcbal/PycharmProjects/EscapeOfKhunPhaen&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/kcbal/PycharmProjects/EscapeOfKhunPhaen"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\kcbal\PycharmProjects\EscapeOfKhunPhaen\game\graphics" />
@@ -85,5 +88,8 @@
       <updated>1686929305912</updated>
     </task>
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>

@@ -37,37 +37,65 @@ def check_move(blocks_group):
 
     return moved
 
+def create_blocks_group(blocks_setup):
+    # Grupa sprite'ów, w której przechowujemy klocki
+    blocks_group = pygame.sprite.Group()
+    for block in blocks_setup:
+        blocks_group.add(block)
 
+    return blocks_group
+
+
+def display_moves(moves):
+    font = pygame.font.Font(None, 30)
+    curr_score_text = font.render(f"Moves: {moves}", True, (0, 0, 0))
+    curr_score_rect =   curr_score_text.get_rect(topleft=(0, 660))
+    screen.blit(curr_score_text, curr_score_rect)
 
 # Funkcja do rozpoczęcia nowej gry
 def start_game(difficulty):
     # Tutaj możesz dodać kod do rozpoczęcia gry z wybranym poziomem trudności
     print("Rozpoczęto nową grę - poziom trudności:", difficulty)
 
+    font = pygame.font.Font(None, 30)
+    return_to_menu_text = font.render("Return To Main Menu", True, (0, 0, 0))
+    restart_lvl_text = font.render("Restart Level", True, (0, 0, 0))
+
+
+    return_to_menu_rect = return_to_menu_text.get_rect(topleft=(0, 0))
+    restart_lvl_rect = restart_lvl_text.get_rect(topright=(450, 0))
+
+
     blocks_setup, moves = lvl_setup(difficulty)
+    blocks_group = create_blocks_group(blocks_setup)
 
     board = Board()
-
     board_group = pygame.sprite.GroupSingle()
     board_group.add(board)
-
-    # Grupa sprite'ów, w której przechowujemy klocki
-    blocks_group = pygame.sprite.Group()
-    for block in blocks_setup:
-        blocks_group.add(block)
 
 
     # Główna pętla gry
     running = True
     while running:
+        mouse_pos = pygame.mouse.get_pos()
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 lvl_save(difficulty, blocks_group.sprites(), moves)
-                running = False
+                quit_game()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                if restart_lvl_rect.collidepoint(mouse_pos):
+                    blocks_setup, moves = lvl_restart(difficulty)
+                    blocks_group = create_blocks_group(blocks_setup)
+                elif return_to_menu_rect.collidepoint(mouse_pos):
+                    lvl_save(difficulty, blocks_group.sprites(), moves)
+                    running = False
 
-        mouse_pos = pygame.mouse.get_pos()
 
         screen.fill((100, 100, 100))
+        screen.blit(restart_lvl_text, restart_lvl_rect)
+        screen.blit(return_to_menu_text, return_to_menu_rect)
         board_group.draw(screen)
         blocks_group.draw(screen)
         blocks_group.update(mouse_pos, blocks_group)
@@ -75,7 +103,7 @@ def start_game(difficulty):
         if check_move(blocks_group):
             moves+=1
 
-        print(moves)
+        display_moves(moves)
 
         if blocks_group.sprites()[-1].check_win_condition():
             print("Poziom ukończony")

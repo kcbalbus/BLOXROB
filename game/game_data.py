@@ -11,7 +11,7 @@ class GameData:
                     "Block1x1": [[0, 0], [0, 1], [3, 0], [3, 1], [1, 3], [2, 3], [1, 4], [2, 4]],
                     "Block2x1": [[0, 3], [3, 3]],
                     "Block1x2": [[1, 2]],
-                    "Block2x2": [1, 0]
+                    "Block2x2": [[1, 0]]
                 },
                 "board_state": {
                     "Block1x1": [[0, 0], [0, 1], [3, 0], [3, 1], [1, 3], [2, 3], [1, 4], [2, 4]],
@@ -67,7 +67,7 @@ class GameData:
         return (self.create_blocks(self.game_data[difficulty]["board_state"]), self.game_data[difficulty]["curr_score"])
 
     def restart_lvl(self, difficulty):
-        return (self.create_blocks(self.game_data[difficulty]["board_setup"]), self.game_data[difficulty]["curr_score"])
+        return (self.create_blocks(self.game_data[difficulty]["board_setup"]), 0)
 
     def create_blocks(self, blocks_dict):
         blocks_list = []
