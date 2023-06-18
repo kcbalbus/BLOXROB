@@ -3,7 +3,7 @@ from pieces import *
 
 class GameData:
     def __init__(self):
-        game_data = {
+        self.game_data = {
             "Easy": {
                 "best_score": 0,
                 "curr_score": 0,
@@ -59,7 +59,7 @@ class GameData:
             self.game_data[difficulty]["board_state"][block_type].clear()
 
         for block in blocks_group:
-            self.game_data[difficulty]["board_state"][block.__class__.__name__].append([block.getX(), block.getY()])
+            self.game_data[difficulty]["board_state"][block.__class__.__name__].append([block.get_x(), block.get_y()])
 
         self.game_data[difficulty]["curr_score"] = moves
 

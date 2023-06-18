@@ -28,6 +28,16 @@ def lvl_save(difficulty, blocks_group, moves):
     game_data.save_lvl(difficulty, blocks_group, moves)
 
 
+def check_move(blocks_group):
+    moved = False
+    for block in blocks_group:
+        if block.move == "just_moved":
+            moved = True
+            block.reset_moved()
+
+    return moved
+
+
 
 # Funkcja do rozpoczęcia nowej gry
 def start_game(difficulty):
@@ -35,7 +45,6 @@ def start_game(difficulty):
     print("Rozpoczęto nową grę - poziom trudności:", difficulty)
 
     blocks_setup, moves = lvl_setup(difficulty)
-
 
     board = Board()
 
@@ -63,6 +72,10 @@ def start_game(difficulty):
         blocks_group.draw(screen)
         blocks_group.update(mouse_pos, blocks_group)
 
+        if check_move(blocks_group):
+            moves+=1
+
+        print(moves)
 
         if blocks_group.sprites()[-1].check_win_condition():
             print("Poziom ukończony")
@@ -102,7 +115,6 @@ def create_main_menu():
 
     game_data.load_data()
 
-    print(game_data.game_data)
 
     while True:
         for event in pygame.event.get():
