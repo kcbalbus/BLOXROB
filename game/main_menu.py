@@ -2,7 +2,7 @@ import pygame
 import sys
 from pieces import *
 from board import *
-import game_data
+from game_data import GameData
 
 pygame.init()
 
@@ -14,14 +14,18 @@ BG_COLOR = (255, 255, 255)
 
 # Utworzenie okna
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Klotski Game")
+pygame.display.set_caption("GTA VI")
 clock = pygame.time.Clock()
+game_data = GameData()
 
 def lvl_setup(difficulty):
     return game_data.load_lvl(difficulty)
 
 def lvl_restart(difficulty):
     return game_data.restart_lvl(difficulty)
+
+def lvl_save(difficulty, blocks_group, moves):
+    game_data.save_lvl(difficulty, blocks_group, moves)
 
 
 
@@ -49,6 +53,7 @@ def start_game(difficulty):
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                lvl_save(difficulty, blocks_group.sprites(), moves)
                 running = False
 
         mouse_pos = pygame.mouse.get_pos()
@@ -74,6 +79,7 @@ def show_rules():
 
 # Funkcja do zakończenia gry
 def quit_game():
+    game_data.save_data()
     pygame.quit()
     sys.exit()
 
@@ -95,6 +101,8 @@ def create_main_menu():
     quit_rect = quit_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 200))
 
     game_data.load_data()
+
+    print(game_data.game_data)
 
     while True:
         for event in pygame.event.get():

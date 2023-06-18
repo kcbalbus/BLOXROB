@@ -94,10 +94,10 @@ class Block(pygame.sprite.Sprite):
 
 
     def getX(self):
-        return (self.rect.x-BOARD_X)/BLOCK_SIZE
+        return int((self.rect.x-BOARD_X)/BLOCK_SIZE)
 
     def getY(self):
-        return (self.rect.y-BOARD_Y)/BLOCK_SIZE
+        return int((self.rect.y-BOARD_Y)/BLOCK_SIZE)
 
 
 class Block1x1(Block):
