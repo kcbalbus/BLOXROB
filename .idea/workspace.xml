@@ -5,30 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc693fdd-58de-43f6-a972-2df9f3cd9b4d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/game/graphics/block1x1_easy.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/block1x1_hard.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/block1x1_medium.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/block1x2_easy.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/block1x2_hard.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/block1x2_medium.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/block2x1_easy.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/block2x1_hard.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/block2x1_medium.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/block2x2_easy.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/block2x2_hard.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/block2x2_medium.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/board_easy.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/board_hard.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/board_medium.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/background.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/button.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/constant_values.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/graphics/background_easy.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/graphics/background_hard.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/graphics/background_medium.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/graphics/button_house_easy.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/graphics/button_house_hard.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/graphics/button_house_medium.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/graphics/button_retry_easy.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/graphics/button_retry_hard.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/graphics/button_retry_medium.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/board.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/board.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/game_data.json" beforeDir="false" afterPath="$PROJECT_DIR$/game/game_data.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/game_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/game_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/graphics/block1x1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/graphics/block1x2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/graphics/block2x1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/graphics/block2x2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/graphics/board.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/game/main_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/main_menu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/pieces.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/pieces.py" afterDir="false" />
     </list>
@@ -58,14 +50,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/kcbal/PycharmProjects/EscapeOfKhunPhaen/game/graphics"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/kcbal/PycharmProjects/EscapeOfKhunPhaen/game/graphics&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\kcbal\PycharmProjects\EscapeOfKhunPhaen\game\graphics" />

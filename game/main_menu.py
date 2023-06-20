@@ -2,15 +2,16 @@ import pygame
 import sys
 from pieces import *
 from board import *
+from background import *
+from button import *
 from game_data import GameData
+import constant_values
 
 pygame.init()
 
+WIDTH = constant_values.WIDTH
+HEIGHT = constant_values.HEIGHT
 
-# Ustawienia ekranu
-WIDTH = 450
-HEIGHT = 700
-BG_COLOR = (255, 255, 255)
 
 # Utworzenie okna
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -52,7 +53,7 @@ def create_blocks_group(blocks_setup):
 def display_moves(moves):
     font = pygame.font.Font(None, 30)
     curr_score_text = font.render(f"Moves: {moves}", True, (0, 0, 0))
-    curr_score_rect =   curr_score_text.get_rect(topleft=(0, 660))
+    curr_score_rect =   curr_score_text.get_rect(topleft=(20, 110))
     screen.blit(curr_score_text, curr_score_rect)
 
 
@@ -127,22 +128,23 @@ def create_main_menu():
 def start_game(difficulty):
     # Tutaj możesz dodać kod do rozpoczęcia gry z wybranym poziomem trudności
     print("Rozpoczęto nową grę - poziom trudności:", difficulty)
+    BUTTON_HOUSE_X = constant_values.BUTTON_HOUSE_X
+    BUTTON_HOUSE_Y = constant_values.BUTTON_HOUSE_Y
+    BUTTON_RETRY_X = constant_values.BUTTON_RETRY_X
+    BUTTON_RETRY_Y = constant_values.BUTTON_RETRY_Y
 
     font = pygame.font.Font(None, 30)
-    return_to_menu_text = font.render("Return To Main Menu", True, (0, 0, 0))
-    restart_lvl_text = font.render("Restart Level", True, (0, 0, 0))
 
+    background = Background(difficulty)
+    board = Board(difficulty)
 
-    return_to_menu_rect = return_to_menu_text.get_rect(topleft=(0, 0))
-    restart_lvl_rect = restart_lvl_text.get_rect(topright=(450, 0))
+    button_house = Button(BUTTON_HOUSE_X, BUTTON_HOUSE_Y, "house", difficulty)
+    button_retry = Button(BUTTON_RETRY_X, BUTTON_RETRY_Y, "retry", difficulty)
+    button_list = [button_house, button_retry]
 
 
     blocks_setup, moves = lvl_setup(difficulty)
     blocks_group = create_blocks_group(blocks_setup)
-
-    board = Board(difficulty)
-    board_group = pygame.sprite.GroupSingle()
-    board_group.add(board)
 
 
     # Główna pętla gry
@@ -155,19 +157,19 @@ def start_game(difficulty):
                 lvl_save(difficulty, blocks_group.sprites(), moves)
                 quit_game()
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_pos = pygame.mouse.get_pos()
-                if restart_lvl_rect.collidepoint(mouse_pos):
+               if button_retry.clicked(mouse_pos):
                     blocks_setup, moves = lvl_restart(difficulty)
                     blocks_group = create_blocks_group(blocks_setup)
-                elif return_to_menu_rect.collidepoint(mouse_pos):
+               elif button_house.clicked(mouse_pos):
                     lvl_save(difficulty, blocks_group.sprites(), moves)
                     running = False
 
 
         screen.fill((100, 100, 100))
-        screen.blit(restart_lvl_text, restart_lvl_rect)
-        screen.blit(return_to_menu_text, return_to_menu_rect)
-        board_group.draw(screen)
+        background.draw(screen)
+        button_retry.draw(screen, mouse_pos)
+        button_house.draw(screen, mouse_pos)
+        board.draw(screen)
         blocks_group.draw(screen)
         blocks_group.update(mouse_pos, blocks_group)
 
