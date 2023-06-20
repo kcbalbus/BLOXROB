@@ -147,7 +147,7 @@ class Block2x2(Block):
 
     def check_win_condition(self):
         # Sprawdź, czy klocek 2x2 znajduje się na środku dolnego rzędu planszy
-        if self.rect.x == BOARD_X + 1 * BLOCK_SIZE and self.rect.y == BOARD_Y + 3 * BLOCK_SIZE:
+        if self.rect.x == BOARD_X + 1 * BLOCK_SIZE and self.rect.y == BOARD_Y + 3 * BLOCK_SIZE and self.selected == False:
             return True
         else:
             return False

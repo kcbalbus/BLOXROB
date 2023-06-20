@@ -50,11 +50,9 @@ def create_blocks_group(blocks_setup):
     return blocks_group
 
 
-def display_moves(moves):
-    font = pygame.font.Font(FONT, 22)
-    curr_score_text = font.render(f"{moves}", True, (255, 255, 255))
-    curr_score_rect =   curr_score_text.get_rect(topleft=(110, 110))
-    screen.blit(curr_score_text, curr_score_rect)
+def display_moves(moves, screen):
+    curr_score = Text(110, 110, 22, str(moves))
+    curr_score.draw(screen)
 
 
 def save_score(difficulty, moves):
@@ -78,20 +76,13 @@ def quit_game():
 
 # Tworzenie menu głównego
 def create_main_menu():
-    font = pygame.font.Font(None, 50)
-    title_text = font.render("Klotski Game", True, (0, 0, 0))
-    easy_text = font.render("Easy", True, (0, 0, 0))
-    medium_text = font.render("Medium", True, (0, 0, 0))
-    hard_text = font.render("Hard", True, (0, 0, 0))
-    rules_text = font.render("Rules", True, (0, 0, 0))
-    quit_text = font.render("Quit", True, (0, 0, 0))
 
-    title_rect = title_text.get_rect(center=(WIDTH // 2, HEIGHT // 4))
-    easy_rect = easy_text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
-    medium_rect = medium_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 50))
-    hard_rect = hard_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 100))
-    rules_rect = rules_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 150))
-    quit_rect = quit_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 200))
+    background = Background("menu")
+    button_easy = Button(0, 200, "menu", "easy")
+    button_medium = Button(0, 300, "menu", "medium")
+    button_hard = Button(0, 400, "menu", "hard")
+    button_help = Button(0, 500, "menu", "help")
+    button_quit = Button(0, 600, "menu", "quit")
 
     game_data.load_data()
 
@@ -102,24 +93,23 @@ def create_main_menu():
                 quit_game()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
-                if easy_rect.collidepoint(mouse_pos):
+                if button_easy.clicked(mouse_pos):
                     start_game("Easy")
-                elif medium_rect.collidepoint(mouse_pos):
+                elif button_medium.clicked(mouse_pos):
                     start_game("Medium")
-                elif hard_rect.collidepoint(mouse_pos):
+                elif button_hard.clicked(mouse_pos):
                     start_game("Hard")
-                elif rules_rect.collidepoint(mouse_pos):
+                elif button_help.clicked(mouse_pos):
                     show_rules()
-                elif quit_rect.collidepoint(mouse_pos):
+                elif button_quit.clicked(mouse_pos):
                     quit_game()
 
-        screen.fill((100, 100, 100))
-        screen.blit(title_text, title_rect)
-        screen.blit(easy_text, easy_rect)
-        screen.blit(medium_text, medium_rect)
-        screen.blit(hard_text, hard_rect)
-        screen.blit(rules_text, rules_rect)
-        screen.blit(quit_text, quit_rect)
+        background.draw(screen)
+        button_easy.draw(screen)
+        button_medium.draw(screen)
+        button_hard.draw(screen)
+        button_help.draw(screen)
+        button_quit.draw(screen)
 
         pygame.display.flip()
         clock.tick(60)
@@ -142,6 +132,7 @@ def start_game(difficulty):
     button_retry = Button(BUTTON_RETRY_X, BUTTON_RETRY_Y, "retry", difficulty)
     button_list = [button_house, button_retry]
 
+    best_score = Text(187, 64, 22, str(get_best_score(difficulty)))
 
     blocks_setup, moves = lvl_setup(difficulty)
     blocks_group = create_blocks_group(blocks_setup)
@@ -168,6 +159,7 @@ def start_game(difficulty):
         background.draw(screen)
         button_retry.draw(screen)
         button_house.draw(screen)
+        best_score.draw(screen)
         board.draw(screen)
         blocks_group.draw(screen)
         blocks_group.update(mouse_pos, blocks_group)
@@ -175,7 +167,7 @@ def start_game(difficulty):
         if check_move(blocks_group):
             moves+=1
 
-        display_moves(moves)
+        display_moves(moves, screen)
 
         if blocks_group.sprites()[-1].check_win_condition():
             print("Poziom ukończony")
@@ -190,6 +182,7 @@ def start_game(difficulty):
 
 def lvl_completed(difficulty, moves):
     is_best_score = save_score(difficulty, moves)
+    print(is_best_score)
 
     font = pygame.font.Font(None, 50)
 

@@ -89,7 +89,8 @@ class GameData:
 
 
     def save_best_score(self, difficulty, moves):
-        if moves < self.game_data[difficulty]["best_score"]:
+        best_score = self.game_data[difficulty]["best_score"]
+        if moves < best_score or best_score==0:
             self.game_data[difficulty]["best_score"] = moves
             return True
         return False
