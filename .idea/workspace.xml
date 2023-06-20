@@ -5,22 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc693fdd-58de-43f6-a972-2df9f3cd9b4d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/game/background.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/button.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/constant_values.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/background_easy.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/background_hard.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/background_medium.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/button_house_easy.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/button_house_hard.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/button_house_medium.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/button_retry_easy.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/button_retry_hard.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/button_retry_medium.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/GUI_elements.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/board.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/board.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/background.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/board.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/button.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/constant_values.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/constant_values.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/game_data.json" beforeDir="false" afterPath="$PROJECT_DIR$/game/game_data.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/game_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/game_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/graphics/background_easy.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/graphics/background_easy.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/graphics/background_hard.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/graphics/background_hard.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/graphics/background_medium.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/graphics/background_medium.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/graphics/button_house_easy.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/graphics/button_house_easy.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/graphics/joystix monospace.otf" beforeDir="false" afterPath="$PROJECT_DIR$/game/graphics/joystix_monospace.otf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/main_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/main_menu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/pieces.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/pieces.py" afterDir="false" />
     </list>
@@ -63,8 +59,8 @@
       <recent name="C:\Users\kcbal\PycharmProjects\EscapeOfKhunPhaen\game\graphics" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\kcbal\PycharmProjects\EscapeOfKhunPhaen\game\graphics" />
       <recent name="C:\Users\kcbal\PycharmProjects\EscapeOfKhunPhaen\game" />
+      <recent name="C:\Users\kcbal\PycharmProjects\EscapeOfKhunPhaen\game\graphics" />
     </key>
   </component>
   <component name="RunManager">

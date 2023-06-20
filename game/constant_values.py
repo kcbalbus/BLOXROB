@@ -11,3 +11,4 @@ BUTTON_HOUSE_X = 388
 BUTTON_HOUSE_Y = 75
 BUTTON_RETRY_X = 320
 BUTTON_RETRY_Y= 75
+FONT = "graphics/joystix_monospace.otf"

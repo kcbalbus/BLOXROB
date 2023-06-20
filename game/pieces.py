@@ -1,5 +1,6 @@
 import pygame
 import constant_values
+import abc
 
 BLOCK_SIZE = constant_values.BLOCK_SIZE
 BOARD_X = constant_values.BOARD_PLAYABLE_X
@@ -8,7 +9,7 @@ BOARD_SIZE_X = constant_values.BOARD_SIZE_X
 BOARD_SIZE_Y = constant_values.BOARD_SIZE_Y
 
 
-class Block(pygame.sprite.Sprite):
+class Block(pygame.sprite.Sprite, abc.ABC):
     WIDTH = 0
     HEIGHT = 0
 

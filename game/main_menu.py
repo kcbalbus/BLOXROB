@@ -1,9 +1,7 @@
 import pygame
 import sys
 from pieces import *
-from board import *
-from background import *
-from button import *
+from GUI_elements import *
 from game_data import GameData
 import constant_values
 
@@ -11,6 +9,8 @@ pygame.init()
 
 WIDTH = constant_values.WIDTH
 HEIGHT = constant_values.HEIGHT
+
+FONT = constant_values.FONT
 
 
 # Utworzenie okna
@@ -51,9 +51,9 @@ def create_blocks_group(blocks_setup):
 
 
 def display_moves(moves):
-    font = pygame.font.Font(None, 30)
-    curr_score_text = font.render(f"Moves: {moves}", True, (0, 0, 0))
-    curr_score_rect =   curr_score_text.get_rect(topleft=(20, 110))
+    font = pygame.font.Font(FONT, 22)
+    curr_score_text = font.render(f"{moves}", True, (255, 255, 255))
+    curr_score_rect =   curr_score_text.get_rect(topleft=(110, 110))
     screen.blit(curr_score_text, curr_score_rect)
 
 
@@ -165,10 +165,9 @@ def start_game(difficulty):
                     running = False
 
 
-        screen.fill((100, 100, 100))
         background.draw(screen)
-        button_retry.draw(screen, mouse_pos)
-        button_house.draw(screen, mouse_pos)
+        button_retry.draw(screen)
+        button_house.draw(screen)
         board.draw(screen)
         blocks_group.draw(screen)
         blocks_group.update(mouse_pos, blocks_group)
