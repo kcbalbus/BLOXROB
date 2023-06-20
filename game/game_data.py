@@ -64,27 +64,34 @@ class GameData:
         self.game_data[difficulty]["curr_score"] = moves
 
     def load_lvl(self, difficulty):
-        return (self.create_blocks(self.game_data[difficulty]["board_state"]), self.game_data[difficulty]["curr_score"])
+        return (self.create_blocks(self.game_data[difficulty]["board_state"], difficulty), self.game_data[difficulty]["curr_score"])
 
     def restart_lvl(self, difficulty):
-        return (self.create_blocks(self.game_data[difficulty]["board_setup"]), 0)
+        return (self.create_blocks(self.game_data[difficulty]["board_setup"], difficulty), 0)
 
-    def create_blocks(self, blocks_dict):
+
+    def restart_lvl_state(self, difficulty):
+        self.game_data[difficulty]["board_state"] = self.game_data[difficulty]["board_setup"]
+        self.game_data[difficulty]["curr_moves"] = 0
+
+    def create_blocks(self, blocks_dict, difficulty):
         blocks_list = []
         for block in blocks_dict["Block1x1"]:
-            blocks_list.append(Block1x1(block[0], block[1]))
+            blocks_list.append(Block1x1(block[0], block[1], difficulty))
         for block in blocks_dict["Block2x1"]:
-            blocks_list.append(Block2x1(block[0], block[1]))
+            blocks_list.append(Block2x1(block[0], block[1], difficulty))
         for block in blocks_dict["Block1x2"]:
-            blocks_list.append(Block1x2(block[0], block[1]))
+            blocks_list.append(Block1x2(block[0], block[1], difficulty))
         for block in blocks_dict["Block2x2"]:
-            blocks_list.append(Block2x2(block[0], block[1]))
+            blocks_list.append(Block2x2(block[0], block[1], difficulty))
 
         return blocks_list
 
     def save_best_score(self, difficulty, moves):
         if moves < self.game_data[difficulty]["best_score"]:
             self.game_data[difficulty]["best_score"] = moves
+            return True
+        return False
 
     def load_best_scores(self):
         best_scores = {}

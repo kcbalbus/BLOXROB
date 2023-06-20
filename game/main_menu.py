@@ -24,6 +24,9 @@ def lvl_setup(difficulty):
 def lvl_restart(difficulty):
     return game_data.restart_lvl(difficulty)
 
+def restart_lvl_state(difficulty):
+    game_data.restart_lvl_state(difficulty)
+
 def lvl_save(difficulty, blocks_group, moves):
     game_data.save_lvl(difficulty, blocks_group, moves)
 
@@ -52,66 +55,14 @@ def display_moves(moves):
     curr_score_rect =   curr_score_text.get_rect(topleft=(0, 660))
     screen.blit(curr_score_text, curr_score_rect)
 
-# Funkcja do rozpoczęcia nowej gry
-def start_game(difficulty):
-    # Tutaj możesz dodać kod do rozpoczęcia gry z wybranym poziomem trudności
-    print("Rozpoczęto nową grę - poziom trudności:", difficulty)
 
-    font = pygame.font.Font(None, 30)
-    return_to_menu_text = font.render("Return To Main Menu", True, (0, 0, 0))
-    restart_lvl_text = font.render("Restart Level", True, (0, 0, 0))
+def save_score(difficulty, moves):
+    return game_data.save_best_score(difficulty, moves)
 
+def get_best_score(difficulty):
+    best_scores = game_data.load_best_scores()
 
-    return_to_menu_rect = return_to_menu_text.get_rect(topleft=(0, 0))
-    restart_lvl_rect = restart_lvl_text.get_rect(topright=(450, 0))
-
-
-    blocks_setup, moves = lvl_setup(difficulty)
-    blocks_group = create_blocks_group(blocks_setup)
-
-    board = Board()
-    board_group = pygame.sprite.GroupSingle()
-    board_group.add(board)
-
-
-    # Główna pętla gry
-    running = True
-    while running:
-        mouse_pos = pygame.mouse.get_pos()
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                lvl_save(difficulty, blocks_group.sprites(), moves)
-                quit_game()
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_pos = pygame.mouse.get_pos()
-                if restart_lvl_rect.collidepoint(mouse_pos):
-                    blocks_setup, moves = lvl_restart(difficulty)
-                    blocks_group = create_blocks_group(blocks_setup)
-                elif return_to_menu_rect.collidepoint(mouse_pos):
-                    lvl_save(difficulty, blocks_group.sprites(), moves)
-                    running = False
-
-
-        screen.fill((100, 100, 100))
-        screen.blit(restart_lvl_text, restart_lvl_rect)
-        screen.blit(return_to_menu_text, return_to_menu_rect)
-        board_group.draw(screen)
-        blocks_group.draw(screen)
-        blocks_group.update(mouse_pos, blocks_group)
-
-        if check_move(blocks_group):
-            moves+=1
-
-        display_moves(moves)
-
-        if blocks_group.sprites()[-1].check_win_condition():
-            print("Poziom ukończony")
-            running = False
-
-        pygame.display.flip()
-        clock.tick(60)
-
+    return best_scores[difficulty]
 
 # Funkcja do wyświetlania zasad gry
 def show_rules():
@@ -171,6 +122,119 @@ def create_main_menu():
 
         pygame.display.flip()
         clock.tick(60)
+
+
+def start_game(difficulty):
+    # Tutaj możesz dodać kod do rozpoczęcia gry z wybranym poziomem trudności
+    print("Rozpoczęto nową grę - poziom trudności:", difficulty)
+
+    font = pygame.font.Font(None, 30)
+    return_to_menu_text = font.render("Return To Main Menu", True, (0, 0, 0))
+    restart_lvl_text = font.render("Restart Level", True, (0, 0, 0))
+
+
+    return_to_menu_rect = return_to_menu_text.get_rect(topleft=(0, 0))
+    restart_lvl_rect = restart_lvl_text.get_rect(topright=(450, 0))
+
+
+    blocks_setup, moves = lvl_setup(difficulty)
+    blocks_group = create_blocks_group(blocks_setup)
+
+    board = Board(difficulty)
+    board_group = pygame.sprite.GroupSingle()
+    board_group.add(board)
+
+
+    # Główna pętla gry
+    running = True
+    while running:
+        mouse_pos = pygame.mouse.get_pos()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                lvl_save(difficulty, blocks_group.sprites(), moves)
+                quit_game()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                if restart_lvl_rect.collidepoint(mouse_pos):
+                    blocks_setup, moves = lvl_restart(difficulty)
+                    blocks_group = create_blocks_group(blocks_setup)
+                elif return_to_menu_rect.collidepoint(mouse_pos):
+                    lvl_save(difficulty, blocks_group.sprites(), moves)
+                    running = False
+
+
+        screen.fill((100, 100, 100))
+        screen.blit(restart_lvl_text, restart_lvl_rect)
+        screen.blit(return_to_menu_text, return_to_menu_rect)
+        board_group.draw(screen)
+        blocks_group.draw(screen)
+        blocks_group.update(mouse_pos, blocks_group)
+
+        if check_move(blocks_group):
+            moves+=1
+
+        display_moves(moves)
+
+        if blocks_group.sprites()[-1].check_win_condition():
+            print("Poziom ukończony")
+            running=lvl_completed(difficulty, moves)
+            blocks_setup, moves = lvl_restart(difficulty)
+            blocks_group = create_blocks_group(blocks_setup)
+
+
+        pygame.display.flip()
+        clock.tick(60)
+
+
+def lvl_completed(difficulty, moves):
+    is_best_score = save_score(difficulty, moves)
+
+    font = pygame.font.Font(None, 50)
+
+    completed_text = font.render(f"Level {difficulty} completed!", True, (0, 0, 0))
+    score_text = font.render(f"Moves: {moves}", True, (0, 0, 0))
+    if is_best_score:
+        best_score_text = font.render("New best score!", True, (0, 0, 0))
+    else:
+        best_score_text = font.render(f"Best score: {get_best_score(difficulty)}", True, (0, 0, 0))
+    return_to_menu_text = font.render("Return To Main Menu", True, (0, 0, 0))
+    restart_lvl_text = font.render("Restart Level", True, (0, 0, 0))
+
+    completed_rect = completed_text.get_rect(center = (WIDTH/2, 100))
+    score_rect = score_text.get_rect(center = (WIDTH/2, 200))
+    best_score_rect = best_score_text.get_rect(center = (WIDTH/2, 300))
+    return_to_menu_rect = return_to_menu_text.get_rect(topright = (WIDTH/2-50, 400))
+    restart_lvl_rect = restart_lvl_text.get_rect(topleft = (WIDTH/2+100, 400))
+
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                quit_game()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                if restart_lvl_rect.collidepoint(mouse_pos):
+                    return True
+                elif return_to_menu_rect.collidepoint(mouse_pos):
+                    restart_lvl_state(difficulty)
+                    return False
+
+        screen.fill((100, 100, 100))
+        screen.blit(completed_text, completed_rect)
+        screen.blit(score_text, score_rect)
+        screen.blit(best_score_text, best_score_rect)
+        screen.blit(return_to_menu_text, return_to_menu_rect)
+        screen.blit(restart_lvl_text, restart_lvl_rect)
+
+        pygame.display.flip()
+        clock.tick(60)
+
+
+
+
+
 
 if __name__ == "__main__":
     # Uruchomienie gry

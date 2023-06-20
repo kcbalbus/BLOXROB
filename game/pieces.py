@@ -10,7 +10,7 @@ class Block(pygame.sprite.Sprite):
     WIDTH = 0
     HEIGHT = 0
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, difficulty):
         super().__init__()
         self.image = None
         self.rect = None
@@ -110,36 +110,36 @@ class Block(pygame.sprite.Sprite):
 class Block1x1(Block):
     WIDTH=1
     HEIGHT=1
-    def __init__(self, x, y):
-        super().__init__(x, y)
-        self.image= pygame.image.load('graphics/block1x1.png').convert_alpha()
+    def __init__(self, x, y, difficulty):
+        super().__init__(x, y, difficulty)
+        self.image= pygame.image.load(f'graphics/block1x1_{difficulty}.png').convert_alpha()
         self.rect = self.prepare_rect(x, y)
 
 
 class Block2x1(Block):
     WIDTH=1
     HEIGHT=2
-    def __init__(self, x, y):
-        super().__init__(x, y)
-        self.image = pygame.image.load('graphics/block2x1.png')
+    def __init__(self, x, y, difficulty):
+        super().__init__(x, y, difficulty)
+        self.image = pygame.image.load(f'graphics/block2x1_{difficulty}.png')
         self.rect = self.prepare_rect(x, y)
 
 
 class Block1x2(Block):
     WIDTH=2
     HEIGHT=1
-    def __init__(self, x, y):
-        super().__init__(x, y)
-        self.image = pygame.image.load('graphics/block1x2.png')
+    def __init__(self, x, y, difficulty):
+        super().__init__(x, y, difficulty)
+        self.image = pygame.image.load(f'graphics/block1x2_{difficulty}.png')
         self.rect = self.prepare_rect(x, y)
 
 
 class Block2x2(Block):
     WIDTH=2
     HEIGHT=2
-    def __init__(self, x, y):
-        super().__init__(x, y)
-        self.image = pygame.image.load('graphics/block2x2.png')
+    def __init__(self, x, y, difficulty):
+        super().__init__(x, y, difficulty)
+        self.image = pygame.image.load(f'graphics/block2x2_{difficulty}.png')
         self.rect = self.prepare_rect(x, y)
 
     def check_win_condition(self):
