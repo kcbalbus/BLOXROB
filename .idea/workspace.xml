@@ -5,19 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc693fdd-58de-43f6-a972-2df9f3cd9b4d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/game/graphics/background_menu.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/button_menu_easy.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/button_menu_hard.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/button_menu_help.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/button_menu_medium.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/graphics/button_menu_quit.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/graphics/background_completed_easy.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/graphics/background_completed_hard.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/graphics/background_completed_medium.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/graphics/background_help.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/graphics/button_house_help.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/GUI_elements.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/GUI_elements.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/game_data.json" beforeDir="false" afterPath="$PROJECT_DIR$/game/game_data.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/game_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/game_data.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/graphics/background_easy.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/graphics/background_easy.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/graphics/background_hard.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/graphics/background_hard.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/graphics/background_medium.png" beforeDir="false" afterPath="$PROJECT_DIR$/game/graphics/background_medium.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/main_menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/main_menu.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/pieces.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/pieces.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

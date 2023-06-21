@@ -46,6 +46,10 @@ class Button(GUIElement):
             return True
         return False
 
+    def scale_and_change_position(self, width, height, x, y):
+        self.image=pygame.transform.scale(self.image, (width, height))
+        self.rect = self.image.get_rect(topleft=(x, y))
+
 
 class Text(GUIElement):
 

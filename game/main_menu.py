@@ -1,3 +1,4 @@
+import os
 import pygame
 import sys
 from pieces import *
@@ -51,7 +52,7 @@ def create_blocks_group(blocks_setup):
 
 
 def display_moves(moves, screen):
-    curr_score = Text(110, 110, 22, str(moves))
+    curr_score = Text(10, 110, 22, f"Moves: {moves}")
     curr_score.draw(screen)
 
 
@@ -63,18 +64,34 @@ def get_best_score(difficulty):
 
     return best_scores[difficulty]
 
-# Funkcja do wyświetlania zasad gry
 def show_rules():
-    # Tutaj możesz dodać kod do wyświetlenia zasad gry
-    print("Zasady gry")
+    background = Background("help")
 
-# Funkcja do zakończenia gry
+    button_house = Button(0, 0, "house", "help")
+    button_house.scale_and_change_position(100, 100, 175, 570)
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                quit_game()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                if button_house.clicked(mouse_pos):
+                    running=False
+
+
+        background.draw(screen)
+        button_house.draw(screen)
+
+        pygame.display.flip()
+        clock.tick(60)
+
 def quit_game():
     game_data.save_data()
     pygame.quit()
     sys.exit()
 
-# Tworzenie menu głównego
 def create_main_menu():
 
     background = Background("menu")
@@ -123,8 +140,6 @@ def start_game(difficulty):
     BUTTON_RETRY_X = constant_values.BUTTON_RETRY_X
     BUTTON_RETRY_Y = constant_values.BUTTON_RETRY_Y
 
-    font = pygame.font.Font(None, 30)
-
     background = Background(difficulty)
     board = Board(difficulty)
 
@@ -132,7 +147,7 @@ def start_game(difficulty):
     button_retry = Button(BUTTON_RETRY_X, BUTTON_RETRY_Y, "retry", difficulty)
     button_list = [button_house, button_retry]
 
-    best_score = Text(187, 64, 22, str(get_best_score(difficulty)))
+    best_score = Text(10, 65, 22, f"Best score: {get_best_score(difficulty)}")
 
     blocks_setup, moves = lvl_setup(difficulty)
     blocks_group = create_blocks_group(blocks_setup)
@@ -182,25 +197,26 @@ def start_game(difficulty):
 
 def lvl_completed(difficulty, moves):
     is_best_score = save_score(difficulty, moves)
-    print(is_best_score)
 
-    font = pygame.font.Font(None, 50)
-
-    completed_text = font.render(f"Level {difficulty} completed!", True, (0, 0, 0))
-    score_text = font.render(f"Moves: {moves}", True, (0, 0, 0))
-    if is_best_score:
-        best_score_text = font.render("New best score!", True, (0, 0, 0))
+    if difficulty=="Medium":
+        completed_font = 28
     else:
-        best_score_text = font.render(f"Best score: {get_best_score(difficulty)}", True, (0, 0, 0))
-    return_to_menu_text = font.render("Return To Main Menu", True, (0, 0, 0))
-    restart_lvl_text = font.render("Restart Level", True, (0, 0, 0))
+        completed_font = 31
 
-    completed_rect = completed_text.get_rect(center = (WIDTH/2, 100))
-    score_rect = score_text.get_rect(center = (WIDTH/2, 200))
-    best_score_rect = best_score_text.get_rect(center = (WIDTH/2, 300))
-    return_to_menu_rect = return_to_menu_text.get_rect(topright = (WIDTH/2-50, 400))
-    restart_lvl_rect = restart_lvl_text.get_rect(topleft = (WIDTH/2+100, 400))
+    background = Background(f"completed_{difficulty}")
+    newline='\n'
+    completed = Text(20, 135, completed_font, f"{difficulty.upper()} - COMPLETED")
+    score = Text(50, 265, 30, f"Moves: {moves}")
+    if is_best_score:
+        best_score = Text(45, 345, 30, "New best score!")
+    else:
+        best_score = Text(50, 345, 30, f"Best score: {get_best_score(difficulty)}")
+    button_house = Button(0, 0, "house", difficulty)
+    button_house.scale_and_change_position(150, 150, 255, 450)
+    button_retry = Button(0, 0, "retry", difficulty)
+    button_retry.scale_and_change_position(150, 150, 46, 450)
 
+    restart_lvl_state(difficulty)
 
     running = True
     while running:
@@ -209,18 +225,17 @@ def lvl_completed(difficulty, moves):
                 quit_game()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
-                if restart_lvl_rect.collidepoint(mouse_pos):
+                if button_retry.clicked(mouse_pos):
                     return True
-                elif return_to_menu_rect.collidepoint(mouse_pos):
-                    restart_lvl_state(difficulty)
+                elif button_house.clicked(mouse_pos):
                     return False
 
-        screen.fill((100, 100, 100))
-        screen.blit(completed_text, completed_rect)
-        screen.blit(score_text, score_rect)
-        screen.blit(best_score_text, best_score_rect)
-        screen.blit(return_to_menu_text, return_to_menu_rect)
-        screen.blit(restart_lvl_text, restart_lvl_rect)
+        background.draw(screen)
+        completed.draw(screen)
+        score.draw(screen)
+        best_score.draw(screen)
+        button_retry.draw(screen)
+        button_house.draw(screen)
 
         pygame.display.flip()
         clock.tick(60)
