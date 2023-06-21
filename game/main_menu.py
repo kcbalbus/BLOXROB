@@ -6,15 +6,11 @@ from GUI_elements import *
 from game_data import GameData
 import constant_values
 
-pygame.init()
-
 WIDTH = constant_values.WIDTH
 HEIGHT = constant_values.HEIGHT
-
 FONT = constant_values.FONT
 
-
-# Utworzenie okna
+pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("GTA VI")
 clock = pygame.time.Clock()
@@ -43,7 +39,6 @@ def check_move(blocks_group):
     return moved
 
 def create_blocks_group(blocks_setup):
-    # Grupa sprite'ów, w której przechowujemy klocki
     blocks_group = pygame.sprite.Group()
     for block in blocks_setup:
         blocks_group.add(block)
@@ -51,46 +46,21 @@ def create_blocks_group(blocks_setup):
     return blocks_group
 
 
-def display_moves(moves, screen):
+def display_moves_lvl(moves, screen):
     curr_score = Text(10, 110, 22, f"Moves: {moves}")
     curr_score.draw(screen)
 
-
 def save_score(difficulty, moves):
     return game_data.save_best_score(difficulty, moves)
+
+def draw_list(list):
+    for item in list:
+        item.draw(screen)
 
 def get_best_score(difficulty):
     best_scores = game_data.load_best_scores()
 
     return best_scores[difficulty]
-
-def show_rules():
-    background = Background("help")
-
-    button_house = Button(0, 0, "house", "help")
-    button_house.scale_and_change_position(100, 100, 175, 570)
-
-    running = True
-    while running:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                quit_game()
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                mouse_pos = pygame.mouse.get_pos()
-                if button_house.clicked(mouse_pos):
-                    running=False
-
-
-        background.draw(screen)
-        button_house.draw(screen)
-
-        pygame.display.flip()
-        clock.tick(60)
-
-def quit_game():
-    game_data.save_data()
-    pygame.quit()
-    sys.exit()
 
 def create_main_menu():
 
@@ -100,6 +70,8 @@ def create_main_menu():
     button_hard = Button(0, 400, "menu", "hard")
     button_help = Button(0, 500, "menu", "help")
     button_quit = Button(0, 600, "menu", "quit")
+
+    to_draw_list = [background, button_easy, button_medium, button_hard, button_help, button_quit]
 
     game_data.load_data()
 
@@ -121,20 +93,13 @@ def create_main_menu():
                 elif button_quit.clicked(mouse_pos):
                     quit_game()
 
-        background.draw(screen)
-        button_easy.draw(screen)
-        button_medium.draw(screen)
-        button_hard.draw(screen)
-        button_help.draw(screen)
-        button_quit.draw(screen)
+        draw_list(to_draw_list)
 
         pygame.display.flip()
         clock.tick(60)
 
 
 def start_game(difficulty):
-    # Tutaj możesz dodać kod do rozpoczęcia gry z wybranym poziomem trudności
-    print("Rozpoczęto nową grę - poziom trudności:", difficulty)
     BUTTON_HOUSE_X = constant_values.BUTTON_HOUSE_X
     BUTTON_HOUSE_Y = constant_values.BUTTON_HOUSE_Y
     BUTTON_RETRY_X = constant_values.BUTTON_RETRY_X
@@ -142,18 +107,14 @@ def start_game(difficulty):
 
     background = Background(difficulty)
     board = Board(difficulty)
-
     button_house = Button(BUTTON_HOUSE_X, BUTTON_HOUSE_Y, "house", difficulty)
     button_retry = Button(BUTTON_RETRY_X, BUTTON_RETRY_Y, "retry", difficulty)
-    button_list = [button_house, button_retry]
-
     best_score = Text(10, 65, 22, f"Best score: {get_best_score(difficulty)}")
-
     blocks_setup, moves = lvl_setup(difficulty)
     blocks_group = create_blocks_group(blocks_setup)
 
+    to_draw_list=[background, board, button_house, button_retry, best_score, blocks_group]
 
-    # Główna pętla gry
     running = True
     while running:
         mouse_pos = pygame.mouse.get_pos()
@@ -166,29 +127,26 @@ def start_game(difficulty):
                if button_retry.clicked(mouse_pos):
                     blocks_setup, moves = lvl_restart(difficulty)
                     blocks_group = create_blocks_group(blocks_setup)
+                    to_draw_list[-1]=blocks_group
                elif button_house.clicked(mouse_pos):
                     lvl_save(difficulty, blocks_group.sprites(), moves)
                     running = False
 
 
-        background.draw(screen)
-        button_retry.draw(screen)
-        button_house.draw(screen)
-        best_score.draw(screen)
-        board.draw(screen)
-        blocks_group.draw(screen)
+        draw_list(to_draw_list)
+
         blocks_group.update(mouse_pos, blocks_group)
 
         if check_move(blocks_group):
             moves+=1
 
-        display_moves(moves, screen)
+        display_moves_lvl(moves, screen)
 
         if blocks_group.sprites()[-1].check_win_condition():
-            print("Poziom ukończony")
             running=lvl_completed(difficulty, moves)
             blocks_setup, moves = lvl_restart(difficulty)
             blocks_group = create_blocks_group(blocks_setup)
+            to_draw_list[-1]=blocks_group
 
 
         pygame.display.flip()
@@ -197,6 +155,7 @@ def start_game(difficulty):
 
 def lvl_completed(difficulty, moves):
     is_best_score = save_score(difficulty, moves)
+    restart_lvl_state(difficulty)
 
     if difficulty=="Medium":
         completed_font = 28
@@ -216,7 +175,7 @@ def lvl_completed(difficulty, moves):
     button_retry = Button(0, 0, "retry", difficulty)
     button_retry.scale_and_change_position(150, 150, 46, 450)
 
-    restart_lvl_state(difficulty)
+    to_draw_list = [background, completed, score, best_score, button_house, button_retry]
 
     running = True
     while running:
@@ -230,21 +189,41 @@ def lvl_completed(difficulty, moves):
                 elif button_house.clicked(mouse_pos):
                     return False
 
-        background.draw(screen)
-        completed.draw(screen)
-        score.draw(screen)
-        best_score.draw(screen)
-        button_retry.draw(screen)
-        button_house.draw(screen)
+        draw_list(to_draw_list)
 
         pygame.display.flip()
         clock.tick(60)
 
 
+def show_rules():
+
+    background = Background("help")
+    button_house = Button(0, 0, "house", "help")
+    button_house.scale_and_change_position(100, 100, 175, 570)
+
+    to_draw_list = [background, button_house]
+
+    running = True
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                quit_game()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_pos = pygame.mouse.get_pos()
+                if button_house.clicked(mouse_pos):
+                    running=False
+
+
+        draw_list(to_draw_list)
+
+        pygame.display.flip()
+        clock.tick(60)
+
+def quit_game():
+    game_data.save_data()
+    pygame.quit()
+    sys.exit()
 
 
 
 
-if __name__ == "__main__":
-    # Uruchomienie gry
-    create_main_menu()

@@ -103,7 +103,6 @@ class GameData:
         return best_scores
 
     def save_data(self):
-        # Zapisywanie danych do pliku JSON
         with open("game_data.json", "w") as file:
             json.dump(self.game_data, file)
 
