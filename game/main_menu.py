@@ -12,7 +12,7 @@ FONT = constant_values.FONT
 
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("GTA VI")
+pygame.display.set_caption("BLOXROB")
 clock = pygame.time.Clock()
 game_data = GameData()
 
