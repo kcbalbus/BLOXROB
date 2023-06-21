@@ -144,9 +144,11 @@ def start_game(difficulty):
 
         if blocks_group.sprites()[-1].check_win_condition():
             running=lvl_completed(difficulty, moves)
+            best_score = Text(10, 65, 22, f"Best score: {get_best_score(difficulty)}")
             blocks_setup, moves = lvl_restart(difficulty)
             blocks_group = create_blocks_group(blocks_setup)
             to_draw_list[-1]=blocks_group
+            to_draw_list[-2] = best_score
 
 
         pygame.display.flip()
