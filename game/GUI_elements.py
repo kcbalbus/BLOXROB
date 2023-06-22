@@ -59,5 +59,4 @@ class Text(GUIElement):
         self.image = font.render(text, True, (255, 255, 255))
         self.rect = self.image.get_rect(topleft=(x, y))
 
-    def draw(self, screen):
-        screen.blit(self.image, self.rect)
+

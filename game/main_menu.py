@@ -159,13 +159,13 @@ def lvl_completed(difficulty, moves):
     is_best_score = save_score(difficulty, moves)
     restart_lvl_state(difficulty)
 
+
     if difficulty=="Medium":
         completed_font = 28
     else:
         completed_font = 31
 
     background = Background(f"completed_{difficulty}")
-    newline='\n'
     completed = Text(20, 135, completed_font, f"{difficulty.upper()} - COMPLETED")
     score = Text(50, 265, 30, f"Moves: {moves}")
     if is_best_score:

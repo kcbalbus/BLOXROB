@@ -1,3 +1,4 @@
+import copy
 import json
 from pieces import *
 
@@ -71,8 +72,8 @@ class GameData:
 
 
     def restart_lvl_state(self, difficulty):
-        self.game_data[difficulty]["board_state"] = self.game_data[difficulty]["board_setup"]
-        self.game_data[difficulty]["curr_moves"] = 0
+        self.game_data[difficulty]["board_state"] = copy.deepcopy(self.game_data[difficulty]["board_setup"])
+        self.game_data[difficulty]["curr_score"] = 0
 
     def create_blocks(self, blocks_dict, difficulty):
         blocks_list = []
